@@ -57,6 +57,7 @@ stages:
               test: units
             - name: Lint
               test: lint
+
   - stage: Sanity_2_20
     displayName: Ansible 2.20 Sanity & Units & Lint
     dependsOn: []
@@ -72,6 +73,7 @@ stages:
               test: units
             - name: Lint
               test: lint
+
   - stage: Sanity_2_19
     displayName: Ansible 2.19 Sanity & Units & Lint
     dependsOn: []
@@ -87,6 +89,7 @@ stages:
               test: units
             - name: Lint
               test: lint
+
   - stage: Sanity_2_18
     displayName: Ansible 2.18 Sanity & Units & Lint
     dependsOn: []
@@ -102,6 +105,7 @@ stages:
               test: units
             - name: Lint
               test: lint
+
   - stage: Sanity_2_17
     displayName: Ansible 2.17 Sanity & Units & Lint
     dependsOn: []
@@ -117,21 +121,7 @@ stages:
               test: units
             - name: Lint
               test: lint
-  - stage: Sanity_2_16
-    displayName: Ansible 2.16 Sanity & Units & Lint
-    dependsOn: []
-    jobs:
-      - template: templates/matrix.yml
-        parameters:
-          nameFormat: "{0}"
-          testFormat: 2.16/{0}
-          targets:
-            - name: Sanity
-              test: sanity
-            - name: Units
-              test: units
-            - name: Lint
-              test: lint
+
   ## Docker
   - stage: Docker_devel
     displayName: Docker devel
@@ -141,12 +131,13 @@ stages:
         parameters:
           testFormat: devel/linux/{0}/1
           targets:
-            - name: Fedora 42
-              test: fedora42
+            - name: Fedora 43
+              test: fedora43
             - name: Ubuntu 22.04
               test: ubuntu2204
             - name: Ubuntu 24.04
               test: ubuntu2404
+
   - stage: Docker_2_20
     displayName: Docker 2.20
     dependsOn: []
@@ -161,6 +152,7 @@ stages:
               test: ubuntu2204
             - name: Ubuntu 24.04
               test: ubuntu2404
+
   - stage: Docker_2_19
     displayName: Docker 2.19
     dependsOn: []
@@ -175,6 +167,7 @@ stages:
               test: ubuntu2204
             - name: Ubuntu 24.04
               test: ubuntu2404
+
   - stage: Docker_2_18
     displayName: Docker 2.18
     dependsOn: []
@@ -189,6 +182,7 @@ stages:
               test: ubuntu2204
             - name: Ubuntu 24.04
               test: ubuntu2404
+
   - stage: Docker_2_17
     displayName: Docker 2.17
     dependsOn: []
@@ -201,20 +195,6 @@ stages:
               test: fedora39
             - name: Ubuntu 22.04
               test: ubuntu2204
-  - stage: Docker_2_16
-    displayName: Docker 2.16
-    dependsOn: []
-    jobs:
-      - template: templates/matrix.yml
-        parameters:
-          testFormat: 2.16/linux/{0}/1
-          targets:
-            - name: CentOS 7
-              test: centos7
-            - name: Fedora 38
-              test: fedora38
-            - name: Ubuntu 22.04
-              test: ubuntu2204
 
   ## Remote
   - stage: Remote_devel
@@ -225,14 +205,15 @@ stages:
         parameters:
           testFormat: devel/{0}/1
           targets:
-            - name: RHEL 10.0
-              test: rhel/10.0
-            - name: RHEL 9.6
-              test: rhel/9.6
+            - name: RHEL 10.1
+              test: rhel/10.1
+            - name: RHEL 9.7
+              test: rhel/9.7
             - name: FreeBSD 14.3
               test: freebsd/14.3
-            - name: FreeBSD 13.5
-              test: freebsd/13.5
+            - name: FreeBSD 15.0
+              test: freebsd/15.0
+
   - stage: Remote_2_20
     displayName: Remote 2.20
     dependsOn: []
@@ -241,14 +222,15 @@ stages:
         parameters:
           testFormat: 2.20/{0}/1
           targets:
-            - name: RHEL 10.0
-              test: rhel/10.0
-            - name: RHEL 9.6
-              test: rhel/9.6
+            - name: RHEL 10.1
+              test: rhel/10.1
+            - name: RHEL 9.7
+              test: rhel/9.7
             - name: FreeBSD 14.3
               test: freebsd/14.3
             - name: FreeBSD 13.5
               test: freebsd/13.5
+
   - stage: Remote_2_19
     displayName: Remote 2.19
     dependsOn: []
@@ -257,14 +239,15 @@ stages:
         parameters:
           testFormat: 2.19/{0}/1
           targets:
-            - name: RHEL 10.0
-              test: rhel/10.0
-            - name: RHEL 9.5
-              test: rhel/9.5
+            - name: RHEL 10.1
+              test: rhel/10.1
+            - name: RHEL 9.7
+              test: rhel/9.7
             - name: FreeBSD 14.2
               test: freebsd/14.2
             - name: FreeBSD 13.5
               test: freebsd/13.5
+
   - stage: Remote_2_18
     displayName: Remote 2.18
     dependsOn: []
@@ -273,12 +256,13 @@ stages:
         parameters:
           testFormat: 2.18/{0}/1
           targets:
-            - name: RHEL 10.0
-              test: rhel/10.0
-            - name: RHEL 9.4
-              test: rhel/9.4
+            - name: RHEL 10.1
+              test: rhel/10.1
+            - name: RHEL 9.7
+              test: rhel/9.7
             - name: FreeBSD 13.5
               test: freebsd/13.5
+
   - stage: Remote_2_17
     displayName: Remote 2.17
     dependsOn: []
@@ -292,26 +276,12 @@ stages:
               test: rhel/10.0
             - name: FreeBSD 13.5
               test: freebsd/13.5
-  - stage: Remote_2_16
-    displayName: Remote 2.16
-    dependsOn: []
-    jobs:
-      - template: templates/matrix.yml
-        parameters:
-          testFormat: 2.16/{0}/1
-          targets:
-            # 2.16 remote target only has RHEL 9.6 image
-            - name: RHEL 9.6
-              test: rhel/9.6
 
   ## Finally
 
   - stage: Summary
     condition: succeededOrFailed()
     dependsOn:
-      - Sanity_2_16
-      - Remote_2_16
-      - Docker_2_16
       - Sanity_2_17
       - Remote_2_17
       - Docker_2_17
